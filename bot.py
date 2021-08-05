@@ -53,26 +53,26 @@ def get_arg(message):
     return " ".join(split[1:])
 
 # start message
-@app.on_message(filters.command('start'))
+@app.on_message(filters.command('!start'))
 async def start(client, message):
     await message.reply("Heya, I'm JEVC Player 🎵\n\nRepo > https://github.com/ImJanindu/vcplayerbot",
                         disable_web_page_preview=True)
 
 # ping checker
-@app.on_message(filters.command('ping') & self_or_contact_filter)
+@app.on_message(filters.command('!ping') & self_or_contact_filter)
 async def ping(client, message):
     start = datetime.now()
-    tauk = await message.reply('Pong!')
+    tauk = await message.reply('!Pong!')
     end = datetime.now()
     m_s = (end - start).microseconds / 1000
     await tauk.edit(f'**Pong!**\n> `{m_s} ms`')
 
 # jiosaavn song download
-@app.on_message(filters.command('saavn') & self_or_contact_filter)
+@app.on_message(filters.command('!saavn') & self_or_contact_filter)
 async def song(client, message):
     message.chat.id
     message.from_user["id"]
-    args = get_arg(message) + " " + "song"
+    args = get_arg(message) + " " + "!song"
     if args.startswith(" "):
         await message.reply("What's the song you want 🧐")
         return ""
@@ -105,7 +105,7 @@ async def download_song(url):
     return song_name
 
 # deezer download by william butcher bot
-@app.on_message(filters.command("deezer") & self_or_contact_filter)
+@app.on_message(filters.command("!deezer") & self_or_contact_filter)
 async def deezer(_, message):
     if len(message.command) < 2:
         await message.reply_text("What's the song you want 🧐")
@@ -128,7 +128,7 @@ async def deezer(_, message):
     os.remove(song)
     await hike.delete()
 
-@app.on_message(filters.command('play') & self_or_contact_filter)
+@app.on_message(filters.command('!play') & self_or_contact_filter)
 async def play_track(client, message):
     if not message.reply_to_message or not message.reply_to_message.audio:
         return
@@ -159,7 +159,7 @@ async def play_track(client, message):
     await a.edit(f'▶️ Playing **{audio.title}** here by JEVC BOT...')
 
 
-@app.on_message(filters.command('stopvc') & self_or_contact_filter)
+@app.on_message(filters.command('!stopvc') & self_or_contact_filter)
 async def stop_playing(_, message):
     group_call = VOICE_CHATS[message.chat.id]
     group_call.stop_playout()
@@ -167,7 +167,7 @@ async def stop_playing(_, message):
     await message.reply('Stopped Playing ❌')
 
 
-@app.on_message(filters.command('joinvc') & self_or_contact_filter)
+@app.on_message(filters.command('!joinvc') & self_or_contact_filter)
 async def join_voice_chat(client, message):
     input_filename = os.path.join(
         client.workdir, DEFAULT_DOWNLOAD_DIR,
@@ -187,7 +187,7 @@ async def join_voice_chat(client, message):
     await message.reply('Joined the Voice Chat ✅')
 
 
-@app.on_message(filters.command('leavevc') & self_or_contact_filter)
+@app.on_message(filters.command('!leavevc') & self_or_contact_filter)
 async def leave_voice_chat(client, message):
     chat_id = message.chat.id
     group_call = VOICE_CHATS[chat_id]
